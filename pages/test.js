@@ -6,7 +6,7 @@ export default function Test() {
     useEffect(() => {
 
         async function fetchData() {
-            const result = await axios('/.netlify/functions/fetch-ex.js')
+            const result = await axios('/.netlify/functions/fetch-ex')
             console.log(result.data)
         }
 
