@@ -5,6 +5,8 @@ exports.handler = async function () {
     const res = await fetch(cocktailAPI);
     const data = await res.json();
 
+    console.log(data)
+
     return {
         statusCode: 200, 
         body: JSON.stringify(data)
