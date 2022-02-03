@@ -1,14 +1,21 @@
+const axios = require('axios')
+
 exports.handler = async function () {
 
-    const cocktailAPI = `https://www.themealdb.com/api/json/v2/${process.env.COCKTAIL_SECRET}/latest.php`
+    const cocktailAPI = `https://www.thecocktaildb.com/api/json/v2/${COCKTAIL_SECRET}/latest.php`
     
-    const res = await fetch(cocktailAPI);
-    const data = await res.json();
-
-    console.log(data)
-
-    return {
-        statusCode: 200, 
-        body: JSON.stringify(data)
-    }
+    try {
+        const { data } = await axios.get(cocktailAPI)
+        return {
+          statusCode: 200,
+          body: JSON.stringify(data)
+          
+        }
+      } catch (error) {
+        const { status, statusText, headers, data } = error.response
+        return { 
+          statusCode: status,
+          body: JSON.stringify({status, statusText, headers, data})
+        }
+      }
 }
