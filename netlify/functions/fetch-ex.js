@@ -2,6 +2,8 @@ const axios = require('axios')
 
 exports.handler = async function () {
 
+    const COCKTAIL_SECRET = process.env.COCKTAIL_SECRET
+
     const cocktailAPI = `https://www.thecocktaildb.com/api/json/v2/${COCKTAIL_SECRET}/latest.php`
     
     try {
