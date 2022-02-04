@@ -24,9 +24,9 @@ export default function MyDrinks() {
     const urlArr = await fetchUrl;
 
     for(const url of urlArr) {
-      console.log(url.drinkID)
-      axios.get(`/.netlify/functions/fetch-by-id?idQuery=${url.drinkID}`)
-        .then(result => console.log(result))
+      // console.log(url.drinkID)
+      await axios.get(`/.netlify/functions/fetch-by-id?idQuery=${url.drinkID}`)
+        .then(result => console.log(result.data.drinks[0]))
 
     }
   }

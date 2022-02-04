@@ -4,9 +4,9 @@ const axios = require('axios')
 
 const handler = async (event) => {
 
-  const API_SECRET = process.env.API_SECRET
+  const COCKTAIL_SECRET = process.env.COCKTAIL_SECRET
   const idQuery = event.queryStringParameters.idQuery
-  const url = `https://www.thecocktaildb.com/api/json/v2/${API_SECRET}/lookup.php?i=${idQuery}`
+  const url = `https://www.thecocktaildb.com/api/json/v2/${COCKTAIL_SECRET}/lookup.php?i=${idQuery}`
 
   try {
     const { data } = await axios.get(url)
