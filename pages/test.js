@@ -6,8 +6,8 @@ export default function Test() {
     useEffect(() => {
 
         async function fetchData() {
-            const result = await axios('/.netlify/functions/fetch-ex')
-            console.log(result.data.drinks[0])
+            const result = await axios(`https://www.thecocktaildb.com/api/json/v2/9973533/randomselection.php`)
+            console.log(result.data.drinks)
         }
 
         fetchData();

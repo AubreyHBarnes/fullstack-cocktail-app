@@ -4,10 +4,22 @@ import Link from 'next/link'
 import { supabase } from '../api'
 import Test from './test'
 
-export default function Home() {
+export default function Home(pageProps) {
 
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(checkUser)
+    checkUser()
+    return () => {
+      authListener?.unsubscribe()
+    };
+  }, [])
+  function checkUser() {
+    const user = supabase.auth.user()
+    setUser(user)
+  }
   useEffect(() => {
     fetchPosts()
     const mySubscription = supabase
@@ -27,7 +39,7 @@ export default function Home() {
     setLoading(false)
   }
   if (loading) return <p className="text-2xl">Loading ...</p>
-  if (!posts) return (<p className="text-2xl">No posts.</p>);
+  if (!user) return (<p className="text-2xl">No posts.</p>);
 
   return (
     <>

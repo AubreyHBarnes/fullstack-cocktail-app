@@ -7,28 +7,46 @@ const axios = require('axios')
 
 export default function MyDrinks() {
   const [drinks, setDrinks] = useState([])
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
+    //on page load, query DB
     fetchUserFaves()
   }, [])
 
+  useEffect(() => {
+    //on page load, query DB
+    setLoading(false)
+  }, [drinks])
+
+
+
   async function fetchUserFaves() {
+    //Retrieve everything under the current logged in user
     const user = supabase.auth.user()
     const { data } = await supabase
       .from('cocktails')
       .select('*')
       .filter('user_id', 'eq', user.id)
+
+    //the data retrieved from DB is sent to fetchDrinkData function
     fetchDrinkData(data)
   }
 
   async function fetchDrinkData(fetchUrl) {
     const urlArr = await fetchUrl;
-
+    const pushArr = [];
+    //for every drink under current user, we lookup each drink by drinkid in the 3rd party api
     for(const url of urlArr) {
-      // console.log(url.drinkID)
-      await axios.get(`/.netlify/functions/fetch-by-id?idQuery=${url.drinkID}`)
-        .then(result => console.log(result.data.drinks[0]))
+      try {
+        await axios.get(`/.netlify/functions/fetch-by-id?idQuery=${url.drinkID}`)
+          .then(result => pushArr.push(result.data.drinks[0]))
 
+      } catch (error) {
+        console.error(error)
+      } 
     }
+    setDrinks(pushArr)
   }
 
 
@@ -39,20 +57,15 @@ export default function MyDrinks() {
   //     .match({ id })
   //   fetchUserFaves()
   // }
+  if (loading) return <p>Loading...</p>
   return (
     <div>
       <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">My Drinks</h1>
-      {
+      {        
         drinks.map((drink, index) => (
           <div key={index} className="border-b border-gray-300	mt-8 pb-4">
-            <h2 className="text-xl font-semibold">{drink.url}</h2>
-            <p className="text-gray-500 mt-2 mb-2">Author: {drink.user_email}</p>
-            {/* <Link href={`/edit-post/${post.id}`}><a className="text-sm mr-4 text-blue-500">Edit Post</a></Link>
-            <Link href={`/posts/${post.id}`}><a className="text-sm mr-4 text-blue-500">View Post</a></Link> */}
-            {/* <button
-              className="text-sm mr-4 text-red-500"
-              onClick={() => deletePost(post.id)}
-            >Delete Post</button> */}
+            <p className="text-gray-500 mt-2 mb-2">Drink Name: {drink.strDrink}</p>
+            
           </div>
         ))
       }
