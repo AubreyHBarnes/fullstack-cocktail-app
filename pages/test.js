@@ -7,7 +7,7 @@ export default function Test() {
 
         async function fetchData() {
             const result = await axios('/.netlify/functions/fetch-ex')
-            console.log(result.data)
+            console.log(result.data.drinks[0])
         }
 
         fetchData();
