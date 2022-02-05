@@ -60,7 +60,6 @@ export default function MyDrinks() {
   if (loading) return <p>Loading...</p>
   return (
     <div>
-      <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">My Drinks</h1>
       {        
         drinks.map((drink, index) => (
           <div key={index} className="border-b border-gray-300	mt-8 pb-4">

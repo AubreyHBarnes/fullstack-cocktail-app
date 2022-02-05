@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { supabase } from '../api'
 import Test from './test'
+import RandomTen from '../components/RandomTen'
 
 export default function Home(pageProps) {
 
@@ -39,7 +40,15 @@ export default function Home(pageProps) {
     setLoading(false)
   }
   if (loading) return <p className="text-2xl">Loading ...</p>
-  if (!user) return (<p className="text-2xl">No posts.</p>);
+  if (!user) return (
+    <>
+    <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">My Drinks</h1>
+    <div className='grid grid-cols-2 gap-2'>
+      <RandomTen />
+    </div>
+      
+    </>
+  );
 
   return (
     <>

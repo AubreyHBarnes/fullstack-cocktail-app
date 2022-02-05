@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
         <a className="m-6">Profile</a>
       </Link>
     </nav>
-    <div className="py-8 px-16">
+    <div className="p-8">
       <Component {...pageProps} />
     </div>
   </div>
