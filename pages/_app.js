@@ -22,13 +22,13 @@ function MyApp({ Component, pageProps }) {
       <Link href="/">
         <a className="m-6">Home</a>
       </Link>
-      {
+      {/* {
         user && (
           <Link href="/create-post">
             <a className="m-6">Create Post</a>
           </Link>
         )
-      }
+      } */}
       {
         user && (
           <Link href="/my-drinks">

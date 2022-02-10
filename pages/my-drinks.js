@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { supabase } from '../api'
 
+import DrinkCard from '../components/DrinkCard'
+
 const axios = require('axios')
 
 export default function MyDrinks() {
@@ -24,13 +26,20 @@ export default function MyDrinks() {
   async function fetchUserFaves() {
     //Retrieve everything under the current logged in user
     const user = supabase.auth.user()
-    const { data } = await supabase
-      .from('cocktails')
-      .select('*')
-      .filter('user_id', 'eq', user.id)
+    if (user) {
+      const { data } = await supabase
+        .from('cocktails')
+        .select('*')
+        .filter('user_id', 'eq', user.id)
+
+      fetchDrinkData(data)
+    } else {
+      console.log('nah')
+    }
+    
 
     //the data retrieved from DB is sent to fetchDrinkData function
-    fetchDrinkData(data)
+    
   }
 
   async function fetchDrinkData(fetchUrl) {
@@ -59,15 +68,13 @@ export default function MyDrinks() {
   // }
   if (loading) return <p>Loading...</p>
   return (
-    <div>
-      {        
-        drinks.map((drink, index) => (
-          <div key={index} className="border-b border-gray-300	mt-8 pb-4">
-            <p className="text-gray-500 mt-2 mb-2">Drink Name: {drink.strDrink}</p>
-            
-          </div>
-        ))
+    <>
+      {
+          loading ? <p>Loading...</p> : 
+          <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4'>
+            <DrinkCard drinks={drinks} />
+        </div>
       }
-    </div>
+    </>
   )
 }
