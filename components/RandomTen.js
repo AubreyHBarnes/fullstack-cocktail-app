@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import DrinkCard from './DrinkCard'
 
 const axios = require('axios')
 
@@ -14,8 +15,10 @@ export default function RandomTen() {
 
   useEffect(() => {
     //on page load, query DB
-    setLoading(false)
-    console.log(drinks)
+    if (drinks.length > 0) {
+        setLoading(false)
+    }
+    
   }, [drinks])
 
   async function fetchDrinkData() {
@@ -31,28 +34,12 @@ export default function RandomTen() {
     setDrinks(pushArr)
   }
 
-  if (loading) return <p>Loading...</p>
+
   return (
     <>
-      
-      {        
-        drinks.map((drink, index) => (
-          <div key={index} className="relative border-gray-300 rounded-xl mt-8 pb-4">
-            <p className="absolute bottom-8 left-4 z-10 backdrop-blur-xl bg-opacity-30 bg-black text-white px-4 py-2 rounded-lg">{drink.strDrink}</p>
-            <Image
-                    className='rounded-xl'
-                    src={drink.strDrinkThumb}
-                    alt="Moon" 
-                    width={500}
-                    height={500}
-                    priority
-
-            />
-            <div id='heart'></div>
-            
-          </div>
-        ))
-      }
+        {
+            loading ? <p>Loading...</p> : <DrinkCard drinks={drinks}/>
+        }
     </>
   )
 }

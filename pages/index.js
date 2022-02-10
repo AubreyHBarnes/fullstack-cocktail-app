@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { supabase } from '../api'
-import Test from './test'
 import RandomTen from '../components/RandomTen'
 
 export default function Home(pageProps) {
 
-  const [posts, setPosts] = useState([])
+  // const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -33,47 +32,21 @@ export default function Home(pageProps) {
     return () => supabase.removeSubscription(mySubscription)
   }, [])
   async function fetchPosts() {
-    const { data, error } = await supabase
-      .from('cocktails')
-      .select()
-    setPosts(data)
+    // const { data, error } = await supabase
+    //   .from('cocktails')
+    //   .select()
+    // setPosts(data)
     setLoading(false)
   }
   if (loading) return <p className="text-2xl">Loading ...</p>
-  if (!user) return (
+  if (user) return (
     <>
     <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">My Drinks</h1>
-    <div className='grid grid-cols-2 gap-2'>
+    <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4'>
       <RandomTen />
     </div>
       
     </>
   );
-
-  return (
-    <>
-      <Test />
-    </>
-  );
-  
-
-//   return (
-//     <div>
-//       <Head>
-//         <title>Supablog</title>
-//       </Head>
-
-//       <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">Posts</h1>
-//       {
-//         posts.map(post => (
-//           <Link key={post.id} href={`/posts/${post.id}`}>
-//             <a className="block border-b border-gray-300	mt-8 pb-4">
-//               <h2 className="text-xl font-semibold">{post.title}</h2>
-//               <p className="text-gray-500 mt-2">Author: {post.user_email}</p>
-//             </a>
-//           </Link>)
-//         )
-//       }
-//     </div>
-//   )
+  if (!user) return <p>lol oop</p>
 }

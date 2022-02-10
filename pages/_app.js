@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
         <a className="m-6">Profile</a>
       </Link>
     </nav>
-    <div className="p-8">
+    <div className="container p-8 items-center justify-items-center m-auto">
       <Component {...pageProps} />
     </div>
   </div>
