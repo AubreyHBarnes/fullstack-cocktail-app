@@ -4,7 +4,7 @@ exports.handler = async function () {
 
     const COCKTAIL_SECRET = process.env.COCKTAIL_SECRET
 
-    const cocktailAPI = `https://www.thecocktaildb.com/api/json/v2/${COCKTAIL_SECRET}/randomselection.php`
+    const cocktailAPI = `https://www.thecocktaildb.com/api/json/v2/${COCKTAIL_SECRET}/popular.php`
     
     try {
         const { data } = await axios.get(cocktailAPI)

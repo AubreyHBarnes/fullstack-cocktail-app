@@ -1,11 +1,10 @@
 
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import DrinkCard from './DrinkCard'
 
 const axios = require('axios')
 
-export default function RandomTen() {
+export default function LatestDrinks() {
   const [drinks, setDrinks] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -22,10 +21,9 @@ export default function RandomTen() {
   }, [drinks])
 
   async function fetchDrinkData() {
-    // const urlArr = await fetchUrl;
     const pushArr = [];
 
-    await axios.get(`/.netlify/functions/fetch-rand-ten`)
+    await axios.get(`/.netlify/functions/fetch-latest`)
         .then(result => {
             for (let i = 0; i < result.data.drinks.length; i++) {
                 pushArr.push(result.data.drinks[i])
@@ -33,6 +31,7 @@ export default function RandomTen() {
         })
     setDrinks(pushArr)
   }
+
 
   return (
     <>

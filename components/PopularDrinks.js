@@ -5,7 +5,7 @@ import DrinkCard from './DrinkCard'
 
 const axios = require('axios')
 
-export default function RandomTen() {
+export default function PopularDrinks() {
   const [drinks, setDrinks] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -25,7 +25,7 @@ export default function RandomTen() {
     // const urlArr = await fetchUrl;
     const pushArr = [];
 
-    await axios.get(`/.netlify/functions/fetch-rand-ten`)
+    await axios.get(`/.netlify/functions/fetch-popular`)
         .then(result => {
             for (let i = 0; i < result.data.drinks.length; i++) {
                 pushArr.push(result.data.drinks[i])
