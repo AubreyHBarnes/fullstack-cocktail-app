@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { supabase } from '../api'
+import { Router } from 'next/router'
 
 export default function DrinkCard ({ drinks }) {
+    const router = useRouter()
 
     const addBeverage = async (addMe) => {
 
@@ -26,12 +30,10 @@ export default function DrinkCard ({ drinks }) {
     }
 
       const handleOnChange = (event) => {
+        const user = supabase.auth.user()
+        
 
-        if(event.target.checked) {
-            addBeverage(event.target)
-        } else {
-            removeBeverage(event.target)
-        }
+        if (user) {event.target.checked ? addBeverage(event.target) : removeBeverage(event.target)} else {router.push('/profile')}
       };
     
     return (
@@ -69,17 +71,8 @@ export default function DrinkCard ({ drinks }) {
 }
 
 export function FavCard ({ drinks }) {
+    const router = useRouter()
     const [isChecked, setIsChecked] = useState(true)
-
-    // useEffect(()=> {
-    //     if(isChecked) {
-    //         // addBeverage(event.target)
-    //         console.log('added')
-    //     } else {
-    //         // removeBeverage(event.target)
-    //         console.log('removed')
-    //     }
-    // }, [isChecked])
 
     const addBeverage = async (addMe) => {
 
@@ -104,7 +97,10 @@ export function FavCard ({ drinks }) {
 
 
     const handleOnChange = (event) => {
-        event.target.checked ? addBeverage(event.target) : removeBeverage(event.target)
+        const user = supabase.auth.user()
+        
+
+        if (user) {event.target.checked ? addBeverage(event.target) : removeBeverage(event.target)} else {Router.push('/profile')}
         
       };
 
@@ -131,7 +127,7 @@ export function FavCard ({ drinks }) {
                             name={drink.strDrink}
                             value={drink.idDrink}
                             defaultChecked={isChecked}
-                            onChange={(event) => handleOnChange(event)}
+                            onChange={(event) => {handleOnChange(event)}}
                         />
                     </div>
                     

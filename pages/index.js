@@ -41,7 +41,7 @@ export default function Home(pageProps) {
     setLoading(false)
   }
   if (loading) return <p className="text-2xl">Loading ...</p>
-  if (user) return (
+   return (
     <>
     <h3 className="text-3xl font-semibold tracking-wide mt-6 mb-2">Random Selection</h3>
     <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4'>
@@ -58,5 +58,5 @@ export default function Home(pageProps) {
       
     </>
   );
-  if (!user) return <p>lol oop</p>
+  
 }
