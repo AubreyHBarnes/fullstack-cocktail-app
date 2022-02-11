@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { supabase } from '../api'
 
-import DrinkCard from '../components/DrinkCard'
+import { FavCard } from '../components/DrinkCard'
 
 const axios = require('axios')
 
@@ -35,11 +35,7 @@ export default function MyDrinks() {
       fetchDrinkData(data)
     } else {
       console.log('nah')
-    }
-    
-
-    //the data retrieved from DB is sent to fetchDrinkData function
-    
+    }    
   }
 
   async function fetchDrinkData(fetchUrl) {
@@ -66,13 +62,13 @@ export default function MyDrinks() {
   //     .match({ id })
   //   fetchUserFaves()
   // }
-  if (loading) return <p>Loading...</p>
+  if (drinks.length === 0) return <p>No favorites found.</p>
   return (
     <>
       {
           loading ? <p>Loading...</p> : 
           <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4'>
-            <DrinkCard drinks={drinks} />
+            <FavCard drinks={drinks} />
         </div>
       }
     </>
