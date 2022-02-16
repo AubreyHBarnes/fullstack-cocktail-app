@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { supabase } from '../api'
 import { Router } from 'next/router'
-import { useEffect } from 'react/cjs/react.development'
+import { useEffect } from 'react'
 
 const axios = require('axios')
 
@@ -16,23 +16,23 @@ export default function DrinkCard ({ drinks }) {
     let [details, setDetails] = useState('')
     let [ingredientArr, setIngredientArr] = useState([])
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     let addMe = []
+        let addMe = []
         
-    //     for (const [key, value] of Object.entries(details)) {
-    //         // console.log(`${key}: ${value}`);
-    //         if (key.includes('Ingredient') && value !== null) {
-    //             addMe.push(value);
-    //         }
-    //       }
-    //       setIngredientArr(addMe)
+        for (const [key, value] of Object.entries(details)) {
+            // console.log(`${key}: ${value}`);
+            if (key.includes('Ingredient') && value !== null) {
+                addMe.push(value);
+            }
+          }
+          setIngredientArr(addMe)
 
-    //     //   ingredientArr.forEach(ingredient => {
-    //     //         console.log(ingredient)
-    //     //   });
+        //   ingredientArr.forEach(ingredient => {
+        //         console.log(ingredient)
+        //   });
 
-    // }, [details])
+    }, [details])
 
     function closeModal() {
         setIsOpen(false)
