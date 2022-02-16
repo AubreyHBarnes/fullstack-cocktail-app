@@ -17,7 +17,7 @@ export default function MyDrinks() {
   }, [])
 
   useEffect(() => {
-    //on page load, query DB
+
     setLoading(false)
   }, [drinks])
 
