@@ -98,7 +98,7 @@ export default function DrinkCard ({ drinks }) {
                         priority
 
                     />
-                    <div id='heart' className='absolute top-4 right-24'>
+                    <div id='heart' className='absolute top-4 right-12'>
                         <input
                             className='invisible'
                             type="checkbox"
@@ -263,7 +263,7 @@ export function FavCard ({ drinks }) {
                         priority
 
                     />
-                    <div id='heart' className='absolute top-4 right-24'>
+                    <div id='heart' className='absolute top-4 right-12'>
                         <input
                             className='invisible'
                             type="checkbox"
