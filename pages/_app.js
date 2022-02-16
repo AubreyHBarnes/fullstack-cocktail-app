@@ -1,9 +1,14 @@
 import Link from 'next/link'
+import Error from 'next/error'
 import { useState, useEffect } from 'react'
 import { supabase } from '../api'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, statusCode }) {
+
+  if(statusCode !== 200) {
+    <Error statusCode={statusCode} />
+  }
   const [user, setUser] = useState(null);
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(checkUser)
