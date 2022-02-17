@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import Head from 'next/head'
-import Link from 'next/link'
 import { supabase } from '../api'
 import RandomTen from '../components/RandomTen'
 import LatestDrinks from '../components/LatestDrinks'
@@ -8,7 +6,6 @@ import PopularDrinks from '../components/PopularDrinks'
 
 export default function Home(pageProps) {
 
-  // const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -34,10 +31,7 @@ export default function Home(pageProps) {
     return () => supabase.removeSubscription(mySubscription)
   }, [])
   async function fetchPosts() {
-    // const { data, error } = await supabase
-    //   .from('cocktails')
-    //   .select()
-    // setPosts(data)
+    
     setLoading(false)
   }
   if (loading) return <p className="text-2xl">Loading ...</p>

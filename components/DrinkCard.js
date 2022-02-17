@@ -1,7 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { supabase } from '../api'
 import { Router } from 'next/router'
@@ -14,23 +13,36 @@ export default function DrinkCard ({ drinks }) {
 
     let [isOpen, setIsOpen] = useState(false)
     let [details, setDetails] = useState('')
-    let [ingredientArr, setIngredientArr] = useState([])
+    // let [ingredientArr, setIngredientArr] = useState([])
+    // let [MeasureArr, setMeasureArr] = useState([])
+    let [measuredIngredients, setMeasuredIngredients] = useState([])
+
 
     useEffect(() => {
 
-        let addMe = []
+        let addIngredient = []
+        let addMeasurement = []
+        let recipeItems = []
         
         for (const [key, value] of Object.entries(details)) {
-            // console.log(`${key}: ${value}`);
             if (key.includes('Ingredient') && value !== null) {
-                addMe.push(value);
+                addIngredient.push(value);
+            }
+            if (key.includes('Measure') && value !== null) {
+                addMeasurement.push(value);
             }
           }
-          setIngredientArr(addMe)
 
-        //   ingredientArr.forEach(ingredient => {
-        //         console.log(ingredient)
-        //   });
+          //There must be more ingredients than measurements, due to some ingredients not having measurements.
+          //Thus, we'll go off of the length of addIngredient
+        for (let i = 0; i < addIngredient.length; i++) {
+            if (addMeasurement[i] === undefined){
+                recipeItems[i] = addIngredient[i]
+            } else {
+                recipeItems[i] = addMeasurement[i].concat(' ', addIngredient[i]);
+            }            
+        }
+        setMeasuredIngredients(recipeItems)
 
     }, [details])
 
@@ -39,7 +51,6 @@ export default function DrinkCard ({ drinks }) {
     }
 
      async function openModal(getDetails) {
-        // setDetails(getDetails)
         try {
             await axios.get(`/.netlify/functions/fetch-by-id?idQuery=${getDetails}`)
               .then(result => setDetails(result.data.drinks[0]))
@@ -49,9 +60,6 @@ export default function DrinkCard ({ drinks }) {
           } 
 
         setIsOpen(true)
-
-        
-
     }
 
     const addBeverage = async (addMe) => {
@@ -134,7 +142,7 @@ export default function DrinkCard ({ drinks }) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                     >
-                    <Dialog.Overlay className="fixed inset-0" />
+                    <Dialog.Overlay className="fixed inset-0 bg-black opacity-70" />
                     </Transition.Child>
 
                     {/* This element is to trick the browser into centering the modal contents. */}
@@ -180,10 +188,14 @@ export default function DrinkCard ({ drinks }) {
                                 <h4>Ingredients</h4>
                                 <div className='grid grid-cols-3'>
                                     {
-                                        ingredientArr.map((ingredient, index) => (
+                                        measuredIngredients.map((ingredient, index) => (
                                                 <p key={ingredient + index}>{ingredient}</p>
                                             ))
+
+                                        
                                     }
+
+                                    {}
                                 </div>
                             </div>
                             <div className='directions-container'>
