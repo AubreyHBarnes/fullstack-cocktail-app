@@ -1,9 +1,6 @@
-// pages/my-posts.js
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { supabase } from '../api'
-
-import { FavCard } from '../components/DrinkCard'
+import DrinkCard from '../components/DrinkCard'
 
 const axios = require('axios')
 
@@ -68,7 +65,7 @@ export default function MyDrinks() {
       {
           loading ? <p>Loading...</p> : 
           <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4'>
-            <FavCard drinks={drinks} />
+            <DrinkCard drinks={drinks} />
         </div>
       }
     </>

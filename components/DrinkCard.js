@@ -13,8 +13,9 @@ export default function DrinkCard ({ drinks }) {
 
     let [isOpen, setIsOpen] = useState(false)
     let [details, setDetails] = useState('')
-    // let [ingredientArr, setIngredientArr] = useState([])
-    // let [MeasureArr, setMeasureArr] = useState([])
+    const [isChecked, setIsChecked] = useState(
+        new Array(drinks.length).fill(false)
+    )
     let [measuredIngredients, setMeasuredIngredients] = useState([])
 
 
@@ -45,6 +46,15 @@ export default function DrinkCard ({ drinks }) {
         setMeasuredIngredients(recipeItems)
 
     }, [details])
+
+    useEffect(()=> {
+
+        //ADJUST THIS PLS *******
+        if (router.pathname.includes('my-drinks')) {
+            const defaultChecked = new Array(drinks.length).fill(true)
+            setIsChecked(defaultChecked)
+        }
+    }, [router.pathname])
 
     function closeModal() {
         setIsOpen(false)
@@ -81,43 +91,52 @@ export default function DrinkCard ({ drinks }) {
       .from('cocktails')
       .delete()
       .match({ user_id: user.id, drinkID: thisOne })
+
     }
 
-      const handleOnChange = (event) => {
-        const user = supabase.auth.user()
-        
+      const handleOnChange = (event, position) => {
+        const user = supabase.auth.user()        
 
         if (user) {event.target.checked ? addBeverage(event.target) : removeBeverage(event.target)} else {router.push('/profile')}
+
+        const updatedCheckedState = isChecked.map((item, index) =>
+        index === position ? !item : item
+        );
+
+        setIsChecked(updatedCheckedState);
+
+        // console.log(event.target.checked)
       };
     
     return (
         <>
-        
+            
             {        
                 drinks.map((drink, index) => (
-                <div key={index} onClick={() => openModal(drink.idDrink)} className="relative border-gray-300 rounded-xl mt-8 pb-4">
-                    <p className="absolute bottom-8 left-4 z-10 backdrop-blur-xl bg-opacity-30 bg-black text-white px-4 py-2 rounded-lg">{drink.strDrink}</p>
-                    <Image
-                        className='rounded-xl'
-                        src={drink.strDrinkThumb}
-                        alt="Moon" 
-                        width={500}
-                        height={500}
-                        priority
-
-                    />
-                    <div id='heart' className='absolute top-4 right-12'>
-                        <input
-                            className='invisible'
-                            type="checkbox"
-                            id={drink.idDrink}
-                            name={drink.strDrink}
-                            value={drink.idDrink}
-                            // checked={checkedState[index]}
-                            onChange={(event) => handleOnChange(event)}
+                <div key={index} className='card-container relative'>
+                    <div onClick={() => openModal(drink.idDrink)} className="relative border-gray-300 rounded-xl mt-8 pb-4">
+                        <p className="absolute bottom-8 left-4 z-10 backdrop-blur-xl bg-opacity-30 bg-black text-white px-4 py-2 rounded-lg">{drink.strDrink}</p>
+                        <Image
+                            className='rounded-xl'
+                            src={drink.strDrinkThumb}
+                            alt="Moon" 
+                            width={500}
+                            height={500}
+                            priority
                         />
                     </div>
-                    
+                    <div id='heart' className='absolute z-10 top-12 right-12'>
+                            <input
+                                className='invisible'
+                                type="checkbox"
+                                id={drink.idDrink}
+                                name={drink.strDrink}
+                                value={drink.idDrink}
+                                checked={isChecked[index]}
+                                // checked={isChecked}
+                                onChange={(event) => handleOnChange(event, index)}
+                            />
+                        </div>
                 </div>
 
                 
@@ -190,9 +209,7 @@ export default function DrinkCard ({ drinks }) {
                                     {
                                         measuredIngredients.map((ingredient, index) => (
                                                 <p key={ingredient + index}>{ingredient}</p>
-                                            ))
-
-                                        
+                                            )) 
                                     }
 
                                     {}
@@ -226,70 +243,3 @@ export default function DrinkCard ({ drinks }) {
     );
 }
 
-export function FavCard ({ drinks }) {
-    const router = useRouter()
-    const [isChecked, setIsChecked] = useState(true)
-
-    const addBeverage = async (addMe) => {
-
-        const user = supabase.auth.user()
-        
-        await supabase
-        .from('cocktails')
-        .insert([
-            { user_id: user.id, user_email: user.email, drinkID: addMe.id }
-        ])
-        .single()
-    }
-
-    const removeBeverage = async (removeMe) => {
-        const user = supabase.auth.user()
-        const thisOne = removeMe.id
-        await supabase
-      .from('cocktails')
-      .delete()
-      .match({ user_id: user.id, drinkID: thisOne })
-    }
-
-
-    const handleOnChange = (event) => {
-        const user = supabase.auth.user()
-        
-        //if a user is logged in, add beverage to favorites, if not logged in, go to signup page
-        if (user) {event.target.checked ? addBeverage(event.target) : removeBeverage(event.target)} else {Router.push('/profile')}
-        
-      };
-
-    return(
-        <>
-            {        
-                drinks.map((drink, index) => (
-                <div key={index} className="relative rounded-xl mt-8 pb-4">
-                    <p className="absolute bottom-8 left-4 z-10 backdrop-blur-xl bg-opacity-30 bg-black text-white px-4 py-2 rounded-lg">{drink.strDrink}</p>
-                    <Image
-                        className='rounded-xl'
-                        src={drink.strDrinkThumb}
-                        alt="Moon" 
-                        width={500}
-                        height={500}
-                        priority
-
-                    />
-                    <div id='heart' className='absolute top-4 right-12'>
-                        <input
-                            className='invisible'
-                            type="checkbox"
-                            id={drink.idDrink}
-                            name={drink.strDrink}
-                            value={drink.idDrink}
-                            defaultChecked={isChecked}
-                            onChange={(event) => {handleOnChange(event)}}
-                        />
-                    </div>
-                    
-                </div>
-                ))
-            }
-        </>
-    );
-}
