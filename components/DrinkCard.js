@@ -49,7 +49,6 @@ export default function DrinkCard ({ drinks }) {
 
     useEffect(()=> {
 
-        //ADJUST THIS PLS *******
         if (router.pathname.includes('my-drinks')) {
             const defaultChecked = new Array(drinks.length).fill(true)
             setIsChecked(defaultChecked)
@@ -104,8 +103,6 @@ export default function DrinkCard ({ drinks }) {
         );
 
         setIsChecked(updatedCheckedState);
-
-        // console.log(event.target.checked)
       };
     
     return (
@@ -133,10 +130,9 @@ export default function DrinkCard ({ drinks }) {
                                 name={drink.strDrink}
                                 value={drink.idDrink}
                                 checked={isChecked[index]}
-                                // checked={isChecked}
                                 onChange={(event) => handleOnChange(event, index)}
                             />
-                        </div>
+                    </div>
                 </div>
 
                 
@@ -191,6 +187,18 @@ export default function DrinkCard ({ drinks }) {
                             priority
 
                         />
+                        <div id='heart' className='absolute z-10 top-12 right-12'>
+                            <input
+                                className='invisible'
+                                type="checkbox"
+                                id={details.idDrink}
+                                name={details.strDrink}
+                                value={details.idDrink}
+                                checked={router.pathname === '/my-drinks' ? true : null}
+                                // checked={isChecked}
+                                onChange={(event) => handleOnChange(event, index)}
+                            />
+                        </div>
                         <section className='modal-body-container p-8'>
 
                             <Dialog.Title
@@ -211,8 +219,6 @@ export default function DrinkCard ({ drinks }) {
                                                 <p key={ingredient + index}>{ingredient}</p>
                                             )) 
                                     }
-
-                                    {}
                                 </div>
                             </div>
                             <div className='directions-container'>
