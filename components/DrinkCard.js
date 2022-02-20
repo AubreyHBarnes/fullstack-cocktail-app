@@ -107,7 +107,6 @@ export default function DrinkCard ({ drinks }) {
     
     return (
         <>
-            
             {        
                 drinks.map((drink, index) => (
                 <div key={index} className='card-container relative'>
@@ -187,6 +186,7 @@ export default function DrinkCard ({ drinks }) {
                             priority
 
                         />
+                        <div id='close' className='absolute z-10 top-12 left-12 font-bold text-2xl cursor-pointer' onClick={closeModal}>X</div>
                         <div id='heart' className='absolute z-10 top-12 right-12'>
                             <input
                                 className='invisible'

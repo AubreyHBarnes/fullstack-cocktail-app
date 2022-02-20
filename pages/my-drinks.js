@@ -51,19 +51,11 @@ export default function MyDrinks() {
     setDrinks(pushArr)
   }
 
-
-  // async function deletePost(id) {
-  //   await supabase
-  //     .from('cocktails')
-  //     .delete()
-  //     .match({ id })
-  //   fetchUserFaves()
-  // }
-  if (drinks.length === 0) return <p>No favorites found.</p>
+  if (loading) return <p>Retrieving favorites...</p>
   return (
     <>
       {
-          loading ? <p>Loading...</p> : 
+          drinks.length === 0 ? <p>No favorites found.</p> : 
           <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4'>
             <DrinkCard drinks={drinks} />
         </div>
