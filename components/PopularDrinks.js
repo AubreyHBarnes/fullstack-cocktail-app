@@ -37,7 +37,21 @@ export default function PopularDrinks() {
   return (
     <>
         {
-            loading ? <p>Loading...</p> : <DrinkCard drinks={drinks}/>
+          loading ? <>
+          <div className="flex animate-pulse flex-row items-center h-full justify-center space-x-5">
+            <div className="w-[275px] bg-gray-300 h-[275px] rounded-xl"></div>
+          </div>
+          <div className="flex animate-pulse flex-row items-center h-full justify-center space-x-5">
+            <div className="w-[275px] bg-gray-300 h-[275px] rounded-xl"></div>
+          </div>
+          <div className="flex animate-pulse flex-row items-center h-full justify-center space-x-5">
+            <div className="w-[275px] bg-gray-300 h-[275px] rounded-xl"></div>
+          </div>
+          <div className="flex animate-pulse flex-row items-center h-full justify-center space-x-5">
+            <div className="w-[275px] bg-gray-300 h-[275px] rounded-xl"></div>
+          </div>
+      </>
+                : <DrinkCard drinks={drinks}/>
         }
     </>
   )
