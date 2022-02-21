@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps, statusCode }) {
     setUser(user)
   }
   return (
-  <div className='bg-gradient-to-r from-[#25152D] to-[#110E17] text-[#EFEEF7]'>
+  <div className='min-h-screen bg-gradient-to-r from-[#25152D] to-[#110E17] text-[#EFEEF7]'>
     <nav className="p-6 border-b border-gray-300">
       <Link href="/">
         <a className="m-6">Home</a>
