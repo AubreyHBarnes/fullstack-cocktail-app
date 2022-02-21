@@ -4,6 +4,10 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      'Libre': ['"Libre Baskerville"', 'serif'],
+      'Ubuntu': ['Ubuntu', 'sans-serif']
+    },
     extend: {},
   },
   plugins: [],

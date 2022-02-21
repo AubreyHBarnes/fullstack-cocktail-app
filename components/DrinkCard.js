@@ -143,7 +143,7 @@ export default function DrinkCard ({ drinks }) {
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog
                 as="div"
-                className="fixed inset-0 z-10 overflow-y-auto"
+                className="fixed inset-0 z-10 overflow-y-auto "
                 onClose={closeModal}
                 >
                 <div className="min-h-screen px-4 text-center">
@@ -175,16 +175,15 @@ export default function DrinkCard ({ drinks }) {
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95"
                     >
-                    <div className="relative inline-block w-full max-w-md  my-8 pb-8 text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <div className="bg-transparent relative inline-block w-full max-w-md  my-8 text-left align-middle transition-all transform shadow-xl">
                         <Image
-                            className='rounded-xl'
+                            className='rounded-t-xl'
                             src={details.strDrinkThumb}
                             alt="Moon" 
+                            layout='responsive'
                             width={500}
                             height={500}
-
-                            priority
-
+                            objectFit='cover'
                         />
                         <div id='close' className='absolute z-10 top-12 left-12 font-bold text-2xl cursor-pointer' onClick={closeModal}>X</div>
                         <div id='heart' className='absolute z-10 top-12 right-12'>
@@ -199,34 +198,34 @@ export default function DrinkCard ({ drinks }) {
                                 onChange={(event) => handleOnChange(event, index)}
                             />
                         </div>
-                        <section className='modal-body-container p-8'>
+                        <section className='modal-body-container rounded-t-xl -translate-y-4 bg-gradient-to-b from-[#25152D] to-[#110E17] text-[#EFEEF7] p-8'>
 
                             <Dialog.Title
                             as="h3"
-                            className="text-lg font-medium leading-6 text-gray-900"
+                            className="text-4xl py-8 text-center font-medium leading-6 font-Libre"
                             >
                             {details.strDrink}
                             </Dialog.Title>
                             <div className="mt-2 flex justify-evenly">
-                                <p className="text-sm text-center text-gray-500">Glass Type<span className='block text-center'>{details.strGlass}</span></p>
-                                <p className="text-sm text-center text-gray-500">Drink Type<span className='block text-center'>{details.strCategory}</span></p>
+                                <p className="text-xl text-center text-gray-500 font-Ubuntu">Glass Type<span className='block text-center text-[#EAD58F]'>{details.strGlass}</span></p>
+                                <p className="text-xl text-center text-gray-500 font-Ubuntu">Drink Type<span className='block text-center text-[#EAD58F]'>{details.strCategory}</span></p>
                             </div>
                             <div className='ingredients-container '>
-                                <h4>Ingredients</h4>
-                                <div className='grid grid-cols-3'>
+                                <h4 className='font-Ubuntu text-2xl p-4'>Ingredients</h4>
+                                <div className='grid grid-cols-3 place-items-stretch justify-center text-center gap-3'>
                                     {
                                         measuredIngredients.map((ingredient, index) => (
-                                                <p key={ingredient + index}>{ingredient}</p>
+                                                <p key={ingredient + index} className='font-Ubuntu text-lg grid rounded-xl p-4 place-items-center bg-[#211E27]'>{ingredient}</p>
                                             )) 
                                     }
                                 </div>
                             </div>
                             <div className='directions-container'>
-                                <h4>Instructions</h4>
-                                <p>{details.strInstructions}</p>
+                                <h4 className='font-Ubuntu text-2xl p-4'>Instructions</h4>
+                                <p className='font-Ubuntu text-xl py-8'>{details.strInstructions}</p>
                             </div>
 
-                            <div className="mt-4">
+                            {/* <div className="mt-4">
                                 <button
                                     type="button"
                                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
@@ -235,7 +234,7 @@ export default function DrinkCard ({ drinks }) {
                                     Got it, thanks!
                                 </button>
                             
-                            </div>
+                            </div> */}
                         </section>
                     </div>
                     
