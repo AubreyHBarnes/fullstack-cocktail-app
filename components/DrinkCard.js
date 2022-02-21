@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { supabase } from '../api'
@@ -18,6 +18,7 @@ export default function DrinkCard ({ drinks }) {
     )
     let [measuredIngredients, setMeasuredIngredients] = useState([])
 
+    let completeButtonRef = useRef(null)
 
     useEffect(() => {
 
@@ -43,6 +44,7 @@ export default function DrinkCard ({ drinks }) {
                 recipeItems[i] = addMeasurement[i].concat(' ', addIngredient[i]);
             }            
         }
+        console.log(recipeItems)
         setMeasuredIngredients(recipeItems)
 
     }, [details])
@@ -142,6 +144,7 @@ export default function DrinkCard ({ drinks }) {
             
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog
+                initialFocus={completeButtonRef}
                 as="div"
                 className="fixed inset-0 z-10 overflow-y-auto "
                 onClose={closeModal}
@@ -185,7 +188,7 @@ export default function DrinkCard ({ drinks }) {
                             height={500}
                             objectFit='cover'
                         />
-                        <div id='close' className='absolute z-10 top-12 left-12 font-bold text-2xl cursor-pointer' onClick={closeModal}>X</div>
+                        <div id='close' ref={completeButtonRef} className='absolute z-10 top-12 left-12 font-bold text-2xl cursor-pointer' onClick={closeModal}>X</div>
                         <div id='heart' className='absolute z-10 top-12 right-12'>
                             <input
                                 className='invisible'
@@ -215,7 +218,8 @@ export default function DrinkCard ({ drinks }) {
                                 <div className='grid grid-cols-3 place-items-stretch justify-center text-center gap-3'>
                                     {
                                         measuredIngredients.map((ingredient, index) => (
-                                                <p key={ingredient + index} className='font-Ubuntu text-lg grid rounded-xl p-4 place-items-center bg-[#211E27]'>{ingredient}</p>
+                                                ingredient !== ' ' ? <p key={ingredient + index} className='font-Ubuntu text-lg grid rounded-xl p-4 place-items-center bg-[#211E27]'>{ingredient}</p> 
+                                                                   : null
                                             )) 
                                     }
                                 </div>
